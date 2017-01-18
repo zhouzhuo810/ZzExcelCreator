@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="文件名"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_file_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="请输入xls文件名"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="表名"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_sheet_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="请输入sheet表名"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="创建表" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="行号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_row"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入行号"
+                android:inputType="number"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="列号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_col"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入列号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="字符串"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_string"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="请输入字符串"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add_string"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="插入字符串" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="行号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_row1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入行号"
+                android:inputType="number"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="列号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_col1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入列号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="数字"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_number"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="请输入数字(支持浮点数)"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add_number"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="插入数字" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="起始行号"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_start_row"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入起始行号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="起始列号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_start_col"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入起始列号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="结束行号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_end_row"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入结束行号"
+                android:inputType="number"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="结束列号"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_end_col"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入结束列号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_merge"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="合并" />
+    </LinearLayout>
+</ScrollView>
