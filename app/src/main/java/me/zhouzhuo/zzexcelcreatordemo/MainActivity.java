@@ -215,6 +215,8 @@ public class MainActivity extends AppCompatActivity {
                                     .getInstance()
                                     .openExcel(new File(PATH + fileName + ".xls"))
                                     .openSheet(0)
+                                    .setColumnWidth(Integer.parseInt(col), 25)
+                                    .setRowHeight(Integer.parseInt(row), 400)
                                     .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, format)
                                     .close();
                             return 1;
