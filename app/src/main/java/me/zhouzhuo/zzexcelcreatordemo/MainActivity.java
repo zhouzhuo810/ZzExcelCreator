@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText etCol;
     private EditText etString;
     private Button btnAddString;
+    private EditText etRow1;
+    private EditText etCol1;
     private EditText etNumber;
     private Button btnAddNumber;
     private EditText etStartRow;
@@ -51,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText etEndRow;
     private EditText etEndCol;
     private Button btnMerge;
-    private EditText etRow1;
-    private EditText etCol1;
-
+    private EditText etRowRead;
+    private EditText etColRead;
+    private Button btnGetCellContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
         btnCreate = (Button) findViewById(R.id.btn_create);
         etRow = (EditText) findViewById(R.id.et_row);
         etCol = (EditText) findViewById(R.id.et_col);
-        etRow1 = (EditText) findViewById(R.id.et_row1);
-        etCol1 = (EditText) findViewById(R.id.et_col1);
         etString = (EditText) findViewById(R.id.et_string);
         btnAddString = (Button) findViewById(R.id.btn_add_string);
+        etRow1 = (EditText) findViewById(R.id.et_row1);
+        etCol1 = (EditText) findViewById(R.id.et_col1);
         etNumber = (EditText) findViewById(R.id.et_number);
         btnAddNumber = (Button) findViewById(R.id.btn_add_number);
         etStartRow = (EditText) findViewById(R.id.et_start_row);
@@ -81,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
         etEndRow = (EditText) findViewById(R.id.et_end_row);
         etEndCol = (EditText) findViewById(R.id.et_end_col);
         btnMerge = (Button) findViewById(R.id.btn_merge);
+        etRowRead = (EditText) findViewById(R.id.et_row_read);
+        etColRead = (EditText) findViewById(R.id.et_col_read);
+        btnGetCellContent = (Button) findViewById(R.id.btn_get_cell_content);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,6 +245,44 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        btnGetCellContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String fileName = etFileName.getText().toString().trim();
+
+                final String col = etColRead.getText().toString().trim();
+                final String row = etRowRead.getText().toString().trim();
+
+                new AsyncTask<String, Void, String>() {
+
+                    @Override
+                    protected String doInBackground(String... params) {
+                        try {
+                            ZzExcelCreator zzExcelCreator = ZzExcelCreator
+                                    .getInstance()
+                                    .openExcel(new File(PATH + fileName + ".xls"))
+                                    .openSheet(0);
+                            String content =  zzExcelCreator.getCellContent(Integer.parseInt(col), Integer.parseInt(row));
+                            zzExcelCreator.close();
+                            return content;
+                        } catch (IOException | BiffException | WriteException e) {
+                            e.printStackTrace();
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    protected void onPostExecute(String aVoid) {
+                        super.onPostExecute(aVoid);
+                        if (aVoid == null) {
+                            Toast.makeText(MainActivity.this, "读取失败！", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "读取成功！内容是：" + aVoid, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }.execute(col, row);
+            }
+        });
     }
 
 

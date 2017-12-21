@@ -204,6 +204,13 @@ public class ZzExcelCreator implements ExcelManager {
     }
 
     @Override
+    public String getCellContent(int col, int row) {
+        checkNullFirst();
+        checkNullSecond();
+        return writableSheet.getWritableCell(col, row).getContents();
+    }
+
+    @Override
     public void close() throws IOException, WriteException {
         checkNullFirst();
         writableWorkbook.write();

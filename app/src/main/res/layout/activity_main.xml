@@ -322,5 +322,64 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:text="合并" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="行号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_row_read"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入行号"
+                android:inputType="number"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="列号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_col_read"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入列号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_get_cell_content"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="读取单元格内容" />
+
     </LinearLayout>
+
+
 </ScrollView>

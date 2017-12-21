@@ -23,7 +23,7 @@ Excel表格生成工具
 ### Gradle：
 
 ```
-compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.0'
+compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.1'
 ```
 
 
@@ -71,6 +71,19 @@ compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.0'
                                     .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, format)  //填入字符串
                                     .fillNumber(Integer.parseInt(col), Integer.parseInt(row), Double.parseDouble(str), format)  //填入数字
                                     .close();
+```
+
+### 读取单元格内容
+
+```java
+                            ZzExcelCreator zzExcelCreator = ZzExcelCreator
+                                    .getInstance()
+                                    .openExcel(new File(PATH + fileName + ".xls"))
+                                    .openSheet(0);
+                            //读取单元格内容
+                            String content =  zzExcelCreator.getCellContent(Integer.parseInt(col), Integer.parseInt(row));
+                            //别忘了close
+                            zzExcelCreator.close();
 ```
 
 ### 最后就是，这些操作最好在子线程操作。

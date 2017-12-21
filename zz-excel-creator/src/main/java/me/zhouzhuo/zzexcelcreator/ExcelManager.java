@@ -46,7 +46,7 @@ public interface ExcelManager {
      *
      * @param file File对象
      * @return ZzExcelCreator
-     * @throws IOException ex
+     * @throws IOException   ex
      * @throws BiffException ex
      */
     ZzExcelCreator openExcel(File file) throws IOException, BiffException;
@@ -209,6 +209,15 @@ public interface ExcelManager {
      * @return ZzExcelCreator
      */
     ZzExcelCreator deleteRow(int position);
+
+    /**
+     * 获取单元格内容
+     *
+     * @param col 列
+     * @param row 行
+     * @return 值
+     */
+    String getCellContent(int col, int row);
 
     /**
      * 结束操作
