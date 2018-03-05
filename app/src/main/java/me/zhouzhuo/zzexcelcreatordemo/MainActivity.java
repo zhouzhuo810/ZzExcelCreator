@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText etFileName;
     private EditText etSheetName;
     private Button btnCreate;
+    private EditText etSheetNameAdd;
+    private Button btnAddSheet;
     private EditText etRow;
     private EditText etCol;
     private EditText etString;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etColRead;
     private Button btnGetCellContent;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         etFileName = (EditText) findViewById(R.id.et_file_name);
         etSheetName = (EditText) findViewById(R.id.et_sheet_name);
         btnCreate = (Button) findViewById(R.id.btn_create);
+        etSheetNameAdd = (EditText) findViewById(R.id.et_sheet_name_add);
+        btnAddSheet = (Button) findViewById(R.id.btn_add_sheet);
         etRow = (EditText) findViewById(R.id.et_row);
         etCol = (EditText) findViewById(R.id.et_col);
         etString = (EditText) findViewById(R.id.et_string);
@@ -103,6 +108,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnAddSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x01);
+                    } else {
+                        addSheet();
+                    }
+                } else {
+                    addSheet();
+                }
+            }
+        });
+
         btnMerge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
                             ZzExcelCreator
                                     .getInstance()
                                     .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0)
-                                    .merge(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]), Integer.parseInt(params[3]))
+                                    .openSheet(0) //打开第1个sheet
+                                    .merge(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]), Integer.parseInt(params[3])) //合并
                                     .close();
                             return 1;
                         } catch (IOException | WriteException | BiffException e) {
@@ -171,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                             ZzExcelCreator
                                     .getInstance()
                                     .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0)
+                                    .openSheet(0)   //打开第1个sheet
                                     .fillNumber(Integer.parseInt(col), Integer.parseInt(row), Double.parseDouble(str), format)
                                     .close();
                             return 1;
@@ -219,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                             ZzExcelCreator
                                     .getInstance()
                                     .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0)
+                                    .openSheet(0)   //打开第1个sheet
                                     .setColumnWidth(Integer.parseInt(col), 25)
                                     .setRowHeight(Integer.parseInt(row), 400)
                                     .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, format)
@@ -261,8 +281,8 @@ public class MainActivity extends AppCompatActivity {
                             ZzExcelCreator zzExcelCreator = ZzExcelCreator
                                     .getInstance()
                                     .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0);
-                            String content =  zzExcelCreator.getCellContent(Integer.parseInt(col), Integer.parseInt(row));
+                                    .openSheet(0);   //打开第1个sheet
+                            String content = zzExcelCreator.getCellContent(Integer.parseInt(col), Integer.parseInt(row));
                             zzExcelCreator.close();
                             return content;
                         } catch (IOException | BiffException | WriteException e) {
@@ -302,6 +322,50 @@ public class MainActivity extends AppCompatActivity {
                             .close();
                     return 1;
                 } catch (IOException | WriteException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Integer aVoid) {
+                super.onPostExecute(aVoid);
+                if (aVoid == 1) {
+                    Toast.makeText(MainActivity.this, "表格创建成功！请到" + PATH + "路径下查看~", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "表格创建失败！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute(fileName, sheetName);
+    }
+
+    /**
+     * 新增Sheet
+     */
+    private void addSheet() {
+        final String fileName = etFileName.getText().toString().trim();
+        String sheetName = etSheetNameAdd.getText().toString().trim();
+
+        if (sheetName.length() == 0) {
+            Toast.makeText(MainActivity.this, "Sheet名不能为空！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        new AsyncTask<String, Void, Integer>() {
+
+            @Override
+            protected Integer doInBackground(String... params) {
+                try {
+                    ZzExcelCreator
+                            .getInstance()
+                            .openExcel(new File(PATH + params[0] + ".xls"))  //如果不想覆盖文件，注意是openExcel
+                            .createSheet(params[1])
+                            .close();
+                    return 1;
+                } catch (IOException | WriteException e) {
+                    e.printStackTrace();
+                    return 0;
+                } catch (BiffException e) {
                     e.printStackTrace();
                     return 0;
                 }

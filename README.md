@@ -36,6 +36,17 @@ compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.1'
                             .createSheet(params[1])        //生成sheet工作表
                             .close();
 ```
+
+### 添加工作表
+
+```java
+                    ZzExcelCreator
+                            .getInstance()
+                            .openExcel(new File(PATH + params[0] + ".xls"))  //如果不想覆盖文件，注意是openExcel
+                            .createSheet(params[1])
+                            .close();
+```
+
 ### 打开Excel文件和工作表
 ```java
                             ZzExcelCreator
