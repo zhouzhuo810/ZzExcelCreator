@@ -21,12 +21,15 @@ import java.io.File;
 import java.io.IOException;
 
 import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
 import jxl.format.Colour;
 import jxl.format.VerticalAlignment;
 import jxl.read.biff.BiffException;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WriteException;
+import me.zhouzhuo.zzexcelcreator.ColourUtil;
 import me.zhouzhuo.zzexcelcreator.ZzExcelCreator;
 import me.zhouzhuo.zzexcelcreator.ZzFormatCreator;
 
@@ -186,6 +189,8 @@ public class MainActivity extends AppCompatActivity {
                                     .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)
                                     .setFontSize(14)
                                     .setFontColor(Colour.ROSE)
+                                    .setBackgroundColor(ColourUtil.getCustomColour("#99cc00"))
+                                    .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColour("#dddddd"))
                                     .getCellFormat();
 
                             ZzExcelCreator

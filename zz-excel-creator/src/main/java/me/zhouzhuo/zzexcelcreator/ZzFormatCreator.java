@@ -18,6 +18,8 @@
 package me.zhouzhuo.zzexcelcreator;
 
 import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
 import jxl.format.Colour;
 import jxl.format.VerticalAlignment;
 import jxl.write.WritableCellFormat;
@@ -26,17 +28,17 @@ import jxl.write.WriteException;
 
 /**
  * @author zhouzhuo810
- *         Created by zz on 2017/1/16.
+ * Created by zz on 2017/1/16.
  */
 public class ZzFormatCreator implements FormatManager {
-
+    
     private WritableFont font;
     private WritableCellFormat cellFormat;
     private static ZzFormatCreator creator;
-
+    
     private ZzFormatCreator() {
     }
-
+    
     public static ZzFormatCreator getInstance() {
         if (creator == null) {
             synchronized (ZzFormatCreator.class) {
@@ -47,11 +49,11 @@ public class ZzFormatCreator implements FormatManager {
         }
         return creator;
     }
-
+    
     public static ZzFormatCreator newInstance() {
         return new ZzFormatCreator();
     }
-
+    
     @Override
     public ZzFormatCreator createCellFont(WritableFont.FontName fontName) throws WriteException {
         font = new WritableFont(fontName);
@@ -63,14 +65,14 @@ public class ZzFormatCreator implements FormatManager {
         cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
         return this;
     }
-
+    
     @Override
     public ZzFormatCreator setFontColor(Colour color) throws WriteException {
         checkNull();
         font.setColour(color);
         return this;
     }
-
+    
     @Override
     public ZzFormatCreator setAlignment(Alignment align, VerticalAlignment verticalAlign) throws WriteException {
         checkNull();
@@ -78,27 +80,34 @@ public class ZzFormatCreator implements FormatManager {
         cellFormat.setAlignment(align);
         return this;
     }
-
+    
     @Override
     public ZzFormatCreator setBackgroundColor(Colour color) throws WriteException {
         checkNull();
         cellFormat.setBackground(color);
         return this;
     }
-
+    
+    @Override
+    public ZzFormatCreator setBorder(Border border, BorderLineStyle borderLineStyle, Colour colour) throws WriteException {
+        checkNull();
+        cellFormat.setBorder(border, borderLineStyle, colour);
+        return this;
+    }
+    
     @Override
     public ZzFormatCreator setFontSize(int fontSize) throws WriteException {
         checkNull();
         font.setPointSize(fontSize);
         return this;
     }
-
+    
     @Override
     public WritableCellFormat getCellFormat() {
         return cellFormat;
     }
-
-
+    
+    
     private void checkNull() {
         if (font == null) {
             throw new NullPointerException("WritableFont is null, Please invoke the method #createCellFont().");
@@ -107,5 +116,5 @@ public class ZzFormatCreator implements FormatManager {
             throw new NullPointerException("WritableCellFormat is null, Please invoke the method #createCellFont().");
         }
     }
-
+    
 }

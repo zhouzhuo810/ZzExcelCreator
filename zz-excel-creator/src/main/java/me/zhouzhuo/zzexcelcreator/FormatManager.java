@@ -17,6 +17,8 @@
 package me.zhouzhuo.zzexcelcreator;
 
 import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
 import jxl.format.Colour;
 import jxl.format.VerticalAlignment;
 import jxl.write.WritableCellFormat;
@@ -25,19 +27,19 @@ import jxl.write.WriteException;
 
 /**
  * @author zhouzhuo810
- *         Created by zz on 2017/1/16.
+ * Created by zz on 2017/1/16.
  */
 public interface FormatManager {
-
+    
     /**
      * 创建字体
      *
      * @param fontName 字体名字 #WritableFont.ARIAL
      * @return ZzFormatCreator
-     * @throws WriteException  ex
+     * @throws WriteException ex
      */
     ZzFormatCreator createCellFont(WritableFont.FontName fontName) throws WriteException;
-
+    
     /**
      * 设置字体颜色
      *
@@ -46,7 +48,7 @@ public interface FormatManager {
      * @throws WriteException ex
      */
     ZzFormatCreator setFontColor(Colour color) throws WriteException;
-
+    
     /**
      * 设置内容靠边或居中
      *
@@ -56,7 +58,7 @@ public interface FormatManager {
      * @throws WriteException ex
      */
     ZzFormatCreator setAlignment(Alignment align, VerticalAlignment verticalAlign) throws WriteException;
-
+    
     /**
      * 设置背景颜色
      *
@@ -65,7 +67,18 @@ public interface FormatManager {
      * @throws WriteException ex
      */
     ZzFormatCreator setBackgroundColor(Colour color) throws WriteException;
-
+    
+    /**
+     * 设置单元格边框样式
+     *
+     * @param border          边框位置
+     * @param borderLineStyle 边框线样式
+     * @param colour          边框线颜色
+     * @return ZzFormatCreator
+     * @throws WriteException ex
+     */
+    ZzFormatCreator setBorder(Border border, BorderLineStyle borderLineStyle, Colour colour) throws WriteException;
+    
     /**
      * 设置字体大小
      *
@@ -74,7 +87,8 @@ public interface FormatManager {
      * @throws WriteException ex
      */
     ZzFormatCreator setFontSize(int size) throws WriteException;
-
+    
+    
     /**
      * 获取格式
      *

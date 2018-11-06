@@ -16,8 +16,6 @@
 
 package me.zhouzhuo.zzexcelcreator;
 
-import android.util.Log;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -84,7 +82,6 @@ public class ZzExcelCreator implements ExcelManager {
     @Override
     public ZzExcelCreator openSheet(int position) {
         checkNullFirst();
-        Log.e("xxxx", writableWorkbook.getNumberOfSheets() + "");
         writableSheet = writableWorkbook.getSheet(position);
         return this;
     }

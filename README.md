@@ -23,7 +23,7 @@ Excel表格生成工具
 ### Gradle：
 
 ```
-compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.1'
+compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.2'
 ```
 
 
@@ -67,6 +67,8 @@ compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.1'
                                     .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)  //设置对齐方式(水平和垂直)
                                     .setFontSize(14)                    //设置字体大小
                                     .setFontColor(Colour.ROSE)          //设置字体颜色
+                                    .setBackgroundColor(ColourUtil.getCustomColour("#99cc00"))  //设置格子背景颜色，如果不设置边框，边框色会和背景色一致。
+                                    .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColour("#dddddd"))  //设置边框样式
                                     .getCellFormat();
 ```
 
@@ -97,4 +99,12 @@ compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.1'
                             zzExcelCreator.close();
 ```
 
+### 自定义颜色
+
+```java
+    Colour colour = ColourUtil.getCustomColour("#99cc00");
+```
+
 ### 最后就是，这些操作最好在子线程操作。
+
+
