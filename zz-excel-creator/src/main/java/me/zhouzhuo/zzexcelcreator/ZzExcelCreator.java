@@ -32,7 +32,7 @@ import jxl.write.biff.RowsExceededException;
 
 /**
  * @author zhouzhuo810
- *         Created by zz on 2017/1/16.
+ * Created by zz on 2017/1/16.
  */
 public class ZzExcelCreator implements ExcelManager {
 
@@ -139,8 +139,16 @@ public class ZzExcelCreator implements ExcelManager {
 
     @Override
     public ZzExcelCreator fillContent(int col, int row, String content, WritableCellFormat format) throws WriteException {
+        return fillContent(col, row, content, false, format);
+    }
+
+    @Override
+    public ZzExcelCreator fillContent(int col, int row, String content, boolean autoWidth, WritableCellFormat format) throws WriteException {
         checkNullFirst();
         checkNullSecond();
+        if (autoWidth && content != null) {
+            writableSheet.setColumnView(col, content.getBytes().length);
+        }
         if (format == null)
             writableSheet.addCell(new Label(col, row, content));
         else

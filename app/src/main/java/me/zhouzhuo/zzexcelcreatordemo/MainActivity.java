@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                                     .getInstance()
                                     .openExcel(new File(PATH + fileName + ".xls"))
                                     .openSheet(0)   //打开第1个sheet
-                                    .setColumnWidth(Integer.parseInt(col), 25)
+                                    .setColumnWidth(Integer.parseInt(col), str.getBytes().length)
                                     .setRowHeight(Integer.parseInt(row), 400)
                                     .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, format)
                                     .close();

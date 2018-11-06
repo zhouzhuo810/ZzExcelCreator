@@ -29,7 +29,7 @@ import jxl.write.biff.RowsExceededException;
  * Created by zz on 2017/1/16.
  */
 public interface ExcelManager {
-    
+
     /**
      * 创建Excel文件
      *
@@ -39,8 +39,8 @@ public interface ExcelManager {
      * @throws IOException ex
      */
     ZzExcelCreator createExcel(String pathDir, String name) throws IOException;
-    
-    
+
+
     /**
      * 打开Excel文件
      *
@@ -50,7 +50,7 @@ public interface ExcelManager {
      * @throws BiffException ex
      */
     ZzExcelCreator openExcel(File file) throws IOException, BiffException;
-    
+
     /**
      * 创建工作表
      *
@@ -58,7 +58,7 @@ public interface ExcelManager {
      * @return ZzExcelCreator
      */
     ZzExcelCreator createSheet(String name);
-    
+
     /**
      * 打开工作表
      *
@@ -66,7 +66,7 @@ public interface ExcelManager {
      * @return ZzExcelCreator
      */
     ZzExcelCreator openSheet(int position);
-    
+
     /**
      * 插入一个空列。
      *
@@ -74,7 +74,7 @@ public interface ExcelManager {
      * @return ZzExcelCreator
      */
     ZzExcelCreator insertColumn(int position);
-    
+
     /**
      * 插入一个空行。
      *
@@ -82,7 +82,7 @@ public interface ExcelManager {
      * @return ZzExcelCreator
      */
     ZzExcelCreator insertRow(int position);
-    
+
     /**
      * 合并区域
      *
@@ -94,8 +94,8 @@ public interface ExcelManager {
      * @throws WriteException ex
      */
     ZzExcelCreator merge(int col1, int row1, int col2, int row2) throws WriteException;
-    
-    
+
+
     /**
      * 合并列(水平合并)
      *
@@ -106,8 +106,8 @@ public interface ExcelManager {
      * @throws WriteException ex
      */
     ZzExcelCreator mergeColumn(int row, int col1, int col2) throws WriteException;
-    
-    
+
+
     /**
      * 合并行(垂直合并)
      *
@@ -118,8 +118,8 @@ public interface ExcelManager {
      * @throws WriteException ex
      */
     ZzExcelCreator mergeRow(int col, int row1, int row2) throws WriteException;
-    
-    
+
+
     /**
      * 填入表格内容(数字)
      *
@@ -131,7 +131,7 @@ public interface ExcelManager {
      * @throws WriteException ex
      */
     ZzExcelCreator fillNumber(int col, int row, double number, WritableCellFormat format) throws WriteException;
-    
+
     /**
      * 填充表格内容(字符串)
      *
@@ -143,8 +143,20 @@ public interface ExcelManager {
      * @throws WriteException ex
      */
     ZzExcelCreator fillContent(int col, int row, String content, WritableCellFormat format) throws WriteException;
-    
-    
+
+    /**
+     * 填充表格内容(字符串)
+     *
+     * @param col       列号
+     * @param row       行号
+     * @param content   要填充的内容
+     * @param autoWidth 是否自适应宽度
+     * @param format    格式(默认时传null即可)
+     * @return ZzExcelCreator
+     * @throws WriteException ex
+     */
+    ZzExcelCreator fillContent(int col, int row, String content, boolean autoWidth, WritableCellFormat format) throws WriteException;
+
     /**
      * 设置行高
      * <p>
@@ -156,7 +168,7 @@ public interface ExcelManager {
      * @throws RowsExceededException ex
      */
     ZzExcelCreator setRowHeight(int position, int height) throws RowsExceededException;
-    
+
     /**
      * 设置行高
      * <p>
@@ -169,7 +181,7 @@ public interface ExcelManager {
      * @throws RowsExceededException ex
      */
     ZzExcelCreator setRowHeightFromTo(int from, int to, int height) throws RowsExceededException;
-    
+
     /**
      * 设置列宽
      * <p>
@@ -180,8 +192,8 @@ public interface ExcelManager {
      * @return ZzExcelCreator ex
      */
     ZzExcelCreator setColumnWidth(int position, int width);
-    
-    
+
+
     /**
      * 设置列宽
      * <p>
@@ -189,11 +201,11 @@ public interface ExcelManager {
      *
      * @param from  起始列号
      * @param to    目标列号+1
-     * @param width 列宽
+     * @param width 列宽,代表字节长度
      * @return ZzExcelCreator
      */
     ZzExcelCreator setColumnWidth(int from, int to, int width);
-    
+
     /**
      * 删除某列表
      *
@@ -201,7 +213,7 @@ public interface ExcelManager {
      * @return ZzExcelCreator
      */
     ZzExcelCreator deleteColumn(int position);
-    
+
     /**
      * 删除某行
      *
@@ -209,7 +221,7 @@ public interface ExcelManager {
      * @return ZzExcelCreator
      */
     ZzExcelCreator deleteRow(int position);
-    
+
     /**
      * 获取单元格内容
      *
@@ -218,7 +230,7 @@ public interface ExcelManager {
      * @return 值
      */
     String getCellContent(int col, int row);
-    
+
     /**
      * 结束操作
      *
@@ -226,5 +238,5 @@ public interface ExcelManager {
      * @throws WriteException ex
      */
     void close() throws IOException, WriteException;
-    
+
 }
