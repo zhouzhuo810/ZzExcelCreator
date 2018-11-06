@@ -1,16 +1,13 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.github.dcendents.android-maven' // 添加这个
 
-group='com.github.zhouzhuo810'
+group = 'com.github.zhouzhuo810' // 指定group，com.github.<用户名>
 
 android {
-    resourcePrefix "zz_" //随意填写
-
     compileSdkVersion 27
-
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 3
         versionName "1.2"
     }
@@ -30,23 +27,25 @@ android {
 dependencies {
     api files('libs/jxl.jar')
 }
+// 指定编码
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
 
-//添加下面这些才会有文档注释。
-
-// build a jar with source files
+// 打包源码
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
 
 task javadoc(type: Javadoc) {
-    failOnError  false
+    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
 }
 
-// build a jar with javadoc
+// 制作文档(Javadoc)
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir

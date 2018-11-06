@@ -23,8 +23,20 @@ Excel表格生成工具
 ### Gradle：
 
 ```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
 
 ```
+	dependencies {
+	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.1'
+	}
+```
+
 
 
 ### 创建Excel文件和工作表
