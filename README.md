@@ -23,7 +23,7 @@ Excel表格生成工具
 ### Gradle：
 
 ```
-compile 'me.zhouzhuo.zzexcelcreator:zz-excel-creator:1.0.2'
+
 ```
 
 
