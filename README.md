@@ -83,6 +83,7 @@ Excel表格生成工具
                 .setUnderline(true)                 //设置是否画下划线，默认false
                 //.setDoubleUnderline(true)         //设置是否画双重下划线，默认false,和setUnderline只有一个生效
                 .setItalic(true)                    //设置是否斜体
+                .setWrapContent(true, 100)          //设置是否自适应宽高，如果自适应，必须设置最大列宽（不能太大，否则可能无效）。
                 .setBackgroundColor(ColourUtil.getCustomColour("#99cc00"))  //设置单元格背景颜色，如果不设置边框，边框色会和背景色一致。
                 .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColour("#dddddd"))  //设置边框样式
                 .getCellFormat();
