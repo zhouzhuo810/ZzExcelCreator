@@ -16,9 +16,13 @@
 
 package me.zhouzhuo.zzexcelcreator;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
@@ -35,14 +39,14 @@ import jxl.write.biff.RowsExceededException;
  * Created by zz on 2017/1/16.
  */
 public class ZzExcelCreator implements ExcelManager {
-
+    
     private static ZzExcelCreator creator;
     private WritableWorkbook writableWorkbook;
     private WritableSheet writableSheet;
-
+    
     private ZzExcelCreator() {
     }
-
+    
     public static ZzExcelCreator getInstance() {
         if (creator == null) {
             synchronized (ZzExcelCreator.class) {
@@ -53,8 +57,8 @@ public class ZzExcelCreator implements ExcelManager {
         }
         return creator;
     }
-
-
+    
+    
     @Override
     public ZzExcelCreator createExcel(String pathDir, String name) throws IOException {
         File dir = new File(pathDir);
@@ -63,7 +67,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableWorkbook = Workbook.createWorkbook(new File(pathDir + File.separator + name + ".xls"));
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator openExcel(File file) throws IOException, BiffException {
         FileInputStream fis = new FileInputStream(file);
@@ -71,21 +75,21 @@ public class ZzExcelCreator implements ExcelManager {
         writableWorkbook = Workbook.createWorkbook(file, wb);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator createSheet(String name) {
         checkNullFirst();
         writableSheet = writableWorkbook.createSheet(name, 0);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator openSheet(int position) {
         checkNullFirst();
         writableSheet = writableWorkbook.getSheet(position);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator insertColumn(int position) {
         checkNullFirst();
@@ -93,7 +97,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.insertColumn(position);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator insertRow(int position) {
         checkNullFirst();
@@ -101,7 +105,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.insertRow(position);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator merge(int col1, int row1, int col2, int row2) throws WriteException {
         checkNullFirst();
@@ -109,7 +113,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.mergeCells(col1, row1, col2, row2);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator mergeColumn(int row, int col1, int col2) throws WriteException {
         checkNullFirst();
@@ -117,7 +121,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.mergeCells(col1, row, col2, row);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator mergeRow(int col, int row1, int row2) throws WriteException {
         checkNullFirst();
@@ -125,7 +129,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.mergeCells(col, row1, col, row2);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator fillNumber(int col, int row, double number, WritableCellFormat format) throws WriteException {
         checkNullFirst();
@@ -136,18 +140,19 @@ public class ZzExcelCreator implements ExcelManager {
             writableSheet.addCell(new Number(col, row, number, format));
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator fillContent(int col, int row, String content, WritableCellFormat format) throws WriteException {
         return fillContent(col, row, content, false, format);
     }
-
+    
     @Override
     public ZzExcelCreator fillContent(int col, int row, String content, boolean autoWidth, WritableCellFormat format) throws WriteException {
         checkNullFirst();
         checkNullSecond();
         if (autoWidth && content != null) {
-            writableSheet.setColumnView(col, content.getBytes().length);
+            int chineseLength = getChineseNum(content);
+            writableSheet.setColumnView(col, (int) ((content.length() - chineseLength) * 1.15 + 2 + chineseLength * 3 + 0.5));
         }
         if (format == null)
             writableSheet.addCell(new Label(col, row, content));
@@ -155,7 +160,23 @@ public class ZzExcelCreator implements ExcelManager {
             writableSheet.addCell(new Label(col, row, content, format));
         return this;
     }
-
+    
+    /**
+     * 统计content中是汉字的个数
+     *
+     * @param content 内容
+     * @return 个数
+     */
+    private int getChineseNum(String content) {
+        int lenOfChinese = 0;
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");    //汉字的Unicode编码范围
+        Matcher m = p.matcher(content);
+        while (m.find()) {
+            lenOfChinese++;
+        }
+        return lenOfChinese;
+    }
+    
     @Override
     public ZzExcelCreator setRowHeight(int position, int height) throws RowsExceededException {
         checkNullFirst();
@@ -163,7 +184,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.setRowView(position, height);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator setRowHeightFromTo(int from, int to, int height) throws RowsExceededException {
         checkNullFirst();
@@ -173,7 +194,7 @@ public class ZzExcelCreator implements ExcelManager {
         }
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator setColumnWidth(int position, int width) {
         checkNullFirst();
@@ -181,7 +202,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.setColumnView(position, width);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator setColumnWidth(int from, int to, int width) {
         checkNullFirst();
@@ -191,7 +212,7 @@ public class ZzExcelCreator implements ExcelManager {
         }
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator deleteColumn(int position) {
         checkNullFirst();
@@ -199,7 +220,7 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.removeColumn(position);
         return this;
     }
-
+    
     @Override
     public ZzExcelCreator deleteRow(int position) {
         checkNullFirst();
@@ -207,14 +228,14 @@ public class ZzExcelCreator implements ExcelManager {
         writableSheet.removeRow(position);
         return this;
     }
-
+    
     @Override
     public String getCellContent(int col, int row) {
         checkNullFirst();
         checkNullSecond();
         return writableSheet.getWritableCell(col, row).getContents();
     }
-
+    
     @Override
     public void close() throws IOException, WriteException {
         checkNullFirst();
@@ -223,18 +244,18 @@ public class ZzExcelCreator implements ExcelManager {
         writableWorkbook = null;
         writableSheet = null;
     }
-
+    
     private void checkNullFirst() {
         if (writableWorkbook == null) {
             throw new NullPointerException("writableWorkbook is null, please invoke the #createExcel(String, String) method or the #openExcel(File) method first.");
         }
     }
-
+    
     private void checkNullSecond() {
         if (writableSheet == null) {
             throw new NullPointerException("writableSheet is null, please invoke the #createSheet(String) method or the #openSheet(int) method first.");
         }
     }
-
-
+    
+    
 }
