@@ -3,76 +3,109 @@ package me.zhouzhuo.zzexcelcreator;
 import android.graphics.Color;
 
 import jxl.format.Colour;
+import jxl.write.WritableWorkbook;
 
 /**
  * jxl自定义颜色工具
+ * 将一些用的比较少的Colour常量赋值为自定义的颜色，以达到自定义颜色效果。
  * Created by zz on 2018/11/6.
  */
 public class ColourUtil {
+
     /**
-     * 将十六进制颜色转换为jxl可用的颜色
+     * 修改常量Colour.ROSE值为指定颜色
+     *
+     * @param colorStr 自定义颜色
+     * @return Colour.ROSE
      */
-    public static Colour getCustomColour(String strColor) {
-        int cl = Color.parseColor(strColor);
-        Colour color = null;
-        Colour[] colors = Colour.getAllColours();
-        if ((colors != null) && (colors.length > 0)) {
-            Colour crtColor = null;
-            int[] rgb = null;
-            int diff = 0;
-            int minDiff = 999;
-            for (int i = 0; i < colors.length; i++) {
-                crtColor = colors[i];
-                rgb = new int[3];
-                rgb[0] = crtColor.getDefaultRGB().getRed();
-                rgb[1] = crtColor.getDefaultRGB().getGreen();
-                rgb[2] = crtColor.getDefaultRGB().getBlue();
-                
-                diff = Math.abs(rgb[0] - Color.red(cl))
-                    + Math.abs(rgb[1] - Color.green(cl))
-                    + Math.abs(rgb[2] - Color.blue(cl));
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    color = crtColor;
-                }
-            }
+    public static Colour getCustomColor1(String colorStr) {
+        int color = Color.parseColor(colorStr); // 自定义的颜色
+        WritableWorkbook workbook = ZzExcelCreator.getInstance().getWritableWorkbook();
+        if (workbook == null) {
+            throw new NullPointerException("Please invoke ZzExcelCreator.getInstance().createExcel() method first.");
         }
-        if (color == null)
-            color = Colour.BLACK;
-        return color;
+        workbook.setColourRGB(Colour.ROSE, Color.red(color), Color.green(color), Color.blue(color));
+        return Colour.ROSE;
     }
-    
-/*
-    //上面的方法适用于Android平台， 如果是javaSE使用此方法。
-    //import java.awt.*;
-    public static Colour getCustomColour(String strColor) {
-        Color cl = Color.decode(strColor);
-        Colour color = null;
-        Colour[] colors = Colour.getAllColours();
-        if ((colors != null) && (colors.length > 0)) {
-            Colour crtColor = null;
-            int[] rgb = null;
-            int diff = 0;
-            int minDiff = 999;
-            for (int i = 0; i < colors.length; i++) {
-                crtColor = colors[i];
-                rgb = new int[3];
-                rgb[0] = crtColor.getDefaultRGB().getRed();
-                rgb[1] = crtColor.getDefaultRGB().getGreen();
-                rgb[2] = crtColor.getDefaultRGB().getBlue();
-                
-                diff = Math.abs(rgb[0] - cl.getRed())
-                    + Math.abs(rgb[1] - cl.getGreen())
-                    + Math.abs(rgb[2] - cl.getBlue());
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    color = crtColor;
-                }
-            }
+
+    /**
+     * 修改常量Colour.CORAL值为指定颜色
+     *
+     * @param colorStr 自定义颜色
+     * @return Colour.CORAL
+     */
+    public static Colour getCustomColor2(String colorStr) {
+        int color = Color.parseColor(colorStr); // 自定义的颜色
+        WritableWorkbook workbook = ZzExcelCreator.getInstance().getWritableWorkbook();
+        if (workbook == null) {
+            throw new NullPointerException("Please invoke ZzExcelCreator.getInstance().createExcel() method first.");
         }
-        if (color == null)
-            color = Colour.BLACK;
-        return color;
+        workbook.setColourRGB(Colour.CORAL, Color.red(color), Color.green(color), Color.blue(color));
+        return Colour.CORAL;
     }
-    */
+
+    /**
+     * 修改常量Colour.YELLOW值为指定颜色
+     *
+     * @param colorStr 自定义颜色
+     * @return Colour.YELLOW
+     */
+    public static Colour getCustomColor3(String colorStr) {
+        int color = Color.parseColor(colorStr); // 自定义的颜色
+        WritableWorkbook workbook = ZzExcelCreator.getInstance().getWritableWorkbook();
+        if (workbook == null) {
+            throw new NullPointerException("Please invoke ZzExcelCreator.getInstance().createExcel() method first.");
+        }
+        workbook.setColourRGB(Colour.YELLOW, Color.red(color), Color.green(color), Color.blue(color));
+        return Colour.YELLOW;
+    }
+
+    /**
+     * 修改常量Colour.YELLOW2值为指定颜色
+     *
+     * @param colorStr 自定义颜色
+     * @return Colour.YELLOW2
+     */
+    public static Colour getCustomColor4(String colorStr) {
+        int color = Color.parseColor(colorStr); // 自定义的颜色
+        WritableWorkbook workbook = ZzExcelCreator.getInstance().getWritableWorkbook();
+        if (workbook == null) {
+            throw new NullPointerException("Please invoke ZzExcelCreator.getInstance().createExcel() method first.");
+        }
+        workbook.setColourRGB(Colour.YELLOW2, Color.red(color), Color.green(color), Color.blue(color));
+        return Colour.YELLOW2;
+    }
+
+    /**
+     * 修改常量Colour.DARK_YELLOW值为指定颜色
+     *
+     * @param colorStr 自定义颜色
+     * @return Colour.DARK_YELLOW
+     */
+    public static Colour getCustomColor5(String colorStr) {
+        int color = Color.parseColor(colorStr); // 自定义的颜色
+        WritableWorkbook workbook = ZzExcelCreator.getInstance().getWritableWorkbook();
+        if (workbook == null) {
+            throw new NullPointerException("Please invoke ZzExcelCreator.getInstance().createExcel() method first.");
+        }
+        workbook.setColourRGB(Colour.DARK_YELLOW, Color.red(color), Color.green(color), Color.blue(color));
+        return Colour.DARK_YELLOW;
+    }
+
+    /**
+     * 修改常量Colour.VERY_LIGHT_YELLOW值为指定颜色
+     *
+     * @param colorStr 自定义颜色
+     * @return Colour.VERY_LIGHT_YELLOW
+     */
+    public static Colour getCustomColor6(String colorStr) {
+        int color = Color.parseColor(colorStr); // 自定义的颜色
+        WritableWorkbook workbook = ZzExcelCreator.getInstance().getWritableWorkbook();
+        if (workbook == null) {
+            throw new NullPointerException("Please invoke ZzExcelCreator.getInstance().createExcel() method first.");
+        }
+        workbook.setColourRGB(Colour.VERY_LIGHT_YELLOW, Color.red(color), Color.green(color), Color.blue(color));
+        return Colour.VERY_LIGHT_YELLOW;
+    }
+
 }

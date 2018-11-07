@@ -401,4 +401,11 @@ public class ZzExcelCreator implements ExcelManager {
         }
     }
 
+    protected WritableSheet getWritableSheet() {
+        return writableSheet;
+    }
+
+    protected WritableWorkbook getWritableWorkbook() {
+        return writableWorkbook;
+    }
 }

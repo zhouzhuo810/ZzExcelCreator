@@ -36,7 +36,7 @@ Excel表格生成工具
 
 ```
 	dependencies {
-	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.5'
+	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.6'
 	}
 ```
 
@@ -87,8 +87,8 @@ Excel表格生成工具
                 //.setDoubleUnderline(true)         //设置是否画双重下划线，默认false,和setUnderline只有一个生效
                 .setItalic(true)                    //设置是否斜体
                 .setWrapContent(true, 100)          //设置是否自适应宽高，如果自适应，必须设置最大列宽（不能太大，否则可能无效）。
-                .setBackgroundColor(ColourUtil.getCustomColour("#99cc00"))  //设置单元格背景颜色，如果不设置边框，边框色会和背景色一致。
-                .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColour("#dddddd"))  //设置边框样式
+                .setBackgroundColor(ColourUtil.getCustomColor1("#99cc00"))  //设置单元格背景颜色，如果不设置边框，边框色会和背景色一致。
+                .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColor2("#dddddd"))  //设置边框样式
                 .getCellFormat();
 ```
 
@@ -122,7 +122,13 @@ Excel表格生成工具
 ### 自定义颜色
 
 ```java
-    Colour colour = ColourUtil.getCustomColour("#99cc00");
+    //注意调用此方法必须保证ZzExcelCreator.getInstance().getWritableWorkbook()不为空。
+    Colour colour1 = ColourUtil.getCustomColor1("#99cc00");
+    Colour colour2 = ColourUtil.getCustomColor2("#99cc00");
+    Colour colour3 = ColourUtil.getCustomColor3("#99cc00");
+    Colour colour4 = ColourUtil.getCustomColor4("#99cc00");
+    Colour colour5 = ColourUtil.getCustomColor5("#99cc00");
+    Colour colour6 = ColourUtil.getCustomColor6("#99cc00");
 ```
 
 ### 注意一定别忘了close。
