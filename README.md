@@ -33,7 +33,7 @@ Excel表格生成工具
 
 ```
 	dependencies {
-	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.3'
+	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.4'
 	}
 ```
 
@@ -79,6 +79,10 @@ Excel表格生成工具
                 .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)  //设置对齐方式(水平和垂直)
                 .setFontSize(14)                    //设置字体大小
                 .setFontColor(Colour.ROSE)          //设置字体颜色
+                .setFontBold(true)                  //设置是否加粗，默认false
+                .setUnderline(true)                 //设置是否画下划线，默认false
+                //.setDoubleUnderline(true)         //设置是否画双重下划线，默认false,和setUnderline只有一个生效
+                .setItalic(true)                    //设置是否斜体
                 .setBackgroundColor(ColourUtil.getCustomColour("#99cc00"))  //设置单元格背景颜色，如果不设置边框，边框色会和背景色一致。
                 .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColour("#dddddd"))  //设置边框样式
                 .getCellFormat();

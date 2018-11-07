@@ -30,12 +30,12 @@ import me.zhouzhuo.zzexcelcreator.ZzExcelCreator;
 import me.zhouzhuo.zzexcelcreator.ZzFormatCreator;
 
 public class MainActivity extends AppCompatActivity {
-
+    
     /**
      * Excel保存路径
      */
     private static final String PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ZzExcelCreator/";
-
+    
     private EditText etFileName;
     private EditText etSheetName;
     private Button btnCreate;
@@ -57,17 +57,17 @@ public class MainActivity extends AppCompatActivity {
     private EditText etRowRead;
     private EditText etColRead;
     private Button btnGetCellContent;
-
-
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         assignViews();
-
+        
     }
-
+    
     private void assignViews() {
         etFileName = (EditText) findViewById(R.id.et_file_name);
         etSheetName = (EditText) findViewById(R.id.et_sheet_name);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         etRowRead = (EditText) findViewById(R.id.et_row_read);
         etColRead = (EditText) findViewById(R.id.et_col_read);
         btnGetCellContent = (Button) findViewById(R.id.btn_get_cell_content);
-
+        
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,10 +103,10 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     createExcel();
                 }
-
+                
             }
         });
-
+        
         btnAddSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,35 +121,35 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        
         btnMerge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String fileName = etFileName.getText().toString().trim();
-
+                
                 final String co1l = etStartCol.getText().toString().trim();
                 final String row1 = etStartRow.getText().toString().trim();
                 final String co12 = etEndCol.getText().toString().trim();
                 final String row2 = etEndRow.getText().toString().trim();
-
+                
                 new AsyncTask<String, Void, Integer>() {
-
+                    
                     @Override
                     protected Integer doInBackground(String... params) {
                         try {
                             ZzExcelCreator
-                                    .getInstance()
-                                    .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0) //打开第1个sheet
-                                    .merge(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]), Integer.parseInt(params[3])) //合并
-                                    .close();
+                                .getInstance()
+                                .openExcel(new File(PATH + fileName + ".xls"))
+                                .openSheet(0) //打开第1个sheet
+                                .merge(Integer.parseInt(params[0]), Integer.parseInt(params[1]), Integer.parseInt(params[2]), Integer.parseInt(params[3])) //合并
+                                .close();
                             return 1;
                         } catch (IOException | WriteException | BiffException e) {
                             e.printStackTrace();
                             return 0;
                         }
                     }
-
+                    
                     @Override
                     protected void onPostExecute(Integer aVoid) {
                         super.onPostExecute(aVoid);
@@ -162,46 +162,46 @@ public class MainActivity extends AppCompatActivity {
                 }.execute(co1l, row1, co12, row2);
             }
         });
-
+        
         btnAddNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String fileName = etFileName.getText().toString().trim();
-
+                
                 final String col = etCol1.getText().toString().trim();
                 final String row = etRow1.getText().toString().trim();
                 final String str = etNumber.getText().toString().trim();
-
+                
                 new AsyncTask<String, Void, Integer>() {
-
+                    
                     @Override
                     protected Integer doInBackground(String... params) {
-
+                        
                         try {
-
+                            
                             WritableCellFormat format = ZzFormatCreator
-                                    .getInstance()
-                                    .createCellFont(WritableFont.ARIAL)
-                                    .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)
-                                    .setFontSize(14)
-                                    .setFontColor(Colour.ROSE)
-                                    .setBackgroundColor(ColourUtil.getCustomColour("#99cc00"))
-                                    .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColour("#dddddd"))
-                                    .getCellFormat();
-
+                                .getInstance()
+                                .createCellFont(WritableFont.ARIAL)
+                                .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)
+                                .setFontSize(14)
+                                .setFontColor(Colour.ROSE)
+                                .setBackgroundColor(ColourUtil.getCustomColour("#99cc00"))
+                                .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColour("#dddddd"))
+                                .getCellFormat();
+                            
                             ZzExcelCreator
-                                    .getInstance()
-                                    .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0)   //打开第1个sheet
-                                    .fillNumber(Integer.parseInt(col), Integer.parseInt(row), Double.parseDouble(str), format)
-                                    .close();
+                                .getInstance()
+                                .openExcel(new File(PATH + fileName + ".xls"))
+                                .openSheet(0)   //打开第1个sheet
+                                .fillNumber(Integer.parseInt(col), Integer.parseInt(row), Double.parseDouble(str), format)
+                                .close();
                             return 1;
                         } catch (IOException | WriteException | BiffException e) {
                             e.printStackTrace();
                             return 0;
                         }
                     }
-
+                    
                     @Override
                     protected void onPostExecute(Integer aVoid) {
                         super.onPostExecute(aVoid);
@@ -214,43 +214,46 @@ public class MainActivity extends AppCompatActivity {
                 }.execute(col, row, str);
             }
         });
-
-
+        
+        
         btnAddString.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String fileName = etFileName.getText().toString().trim();
-
+                
                 final String col = etCol.getText().toString().trim();
                 final String row = etRow.getText().toString().trim();
                 final String str = etString.getText().toString().trim();
-
+                
                 new AsyncTask<String, Void, Integer>() {
-
+                    
                     @Override
                     protected Integer doInBackground(String... params) {
                         try {
                             WritableCellFormat format = ZzFormatCreator
-                                    .getInstance()
-                                    .createCellFont(WritableFont.ARIAL)
-                                    .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)
-                                    .setFontSize(14)
-                                    .setFontColor(Colour.DARK_GREEN)
-                                    .getCellFormat();
+                                .getInstance()
+                                .createCellFont(WritableFont.ARIAL)
+                                .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)
+                                .setFontSize(14)
+                                .setFontBold(true)
+                                .setUnderline(true)
+                                .setItalic(true)
+                                .setFontColor(Colour.DARK_GREEN)
+                                .getCellFormat();
                             ZzExcelCreator
-                                    .getInstance()
-                                    .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0)   //打开第1个sheet
-                                    .setRowHeight(Integer.parseInt(row), 400)
-                                    .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, true, format)
-                                    .close();
+                                .getInstance()
+                                .openExcel(new File(PATH + fileName + ".xls"))
+                                .openSheet(0)   //打开第1个sheet
+                                .setRowHeight(Integer.parseInt(row), 400)
+                                .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, true, format)
+                                .close();
                             return 1;
                         } catch (IOException | WriteException | BiffException e) {
                             e.printStackTrace();
                             return 0;
                         }
                     }
-
+                    
                     @Override
                     protected void onPostExecute(Integer aVoid) {
                         super.onPostExecute(aVoid);
@@ -263,25 +266,25 @@ public class MainActivity extends AppCompatActivity {
                 }.execute(col, row, str);
             }
         });
-
-
+        
+        
         btnGetCellContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String fileName = etFileName.getText().toString().trim();
-
+                
                 final String col = etColRead.getText().toString().trim();
                 final String row = etRowRead.getText().toString().trim();
-
+                
                 new AsyncTask<String, Void, String>() {
-
+                    
                     @Override
                     protected String doInBackground(String... params) {
                         try {
                             ZzExcelCreator zzExcelCreator = ZzExcelCreator
-                                    .getInstance()
-                                    .openExcel(new File(PATH + fileName + ".xls"))
-                                    .openSheet(0);   //打开第1个sheet
+                                .getInstance()
+                                .openExcel(new File(PATH + fileName + ".xls"))
+                                .openSheet(0);   //打开第1个sheet
                             String content = zzExcelCreator.getCellContent(Integer.parseInt(col), Integer.parseInt(row));
                             zzExcelCreator.close();
                             return content;
@@ -290,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                             return null;
                         }
                     }
-
+                    
                     @Override
                     protected void onPostExecute(String aVoid) {
                         super.onPostExecute(aVoid);
@@ -304,29 +307,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
+    
+    
     private void createExcel() {
         String fileName = etFileName.getText().toString().trim();
         String sheetName = etSheetName.getText().toString().trim();
-
+        
         new AsyncTask<String, Void, Integer>() {
-
+            
             @Override
             protected Integer doInBackground(String... params) {
                 try {
                     ZzExcelCreator
-                            .getInstance()
-                            .createExcel(PATH, params[0])
-                            .createSheet(params[1])
-                            .close();
+                        .getInstance()
+                        .createExcel(PATH, params[0])
+                        .createSheet(params[1])
+                        .close();
                     return 1;
                 } catch (IOException | WriteException e) {
                     e.printStackTrace();
                     return 0;
                 }
             }
-
+            
             @Override
             protected void onPostExecute(Integer aVoid) {
                 super.onPostExecute(aVoid);
@@ -338,29 +341,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }.execute(fileName, sheetName);
     }
-
+    
     /**
      * 新增Sheet
      */
     private void addSheet() {
         final String fileName = etFileName.getText().toString().trim();
         String sheetName = etSheetNameAdd.getText().toString().trim();
-
+        
         if (sheetName.length() == 0) {
             Toast.makeText(MainActivity.this, "Sheet名不能为空！", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        
         new AsyncTask<String, Void, Integer>() {
-
+            
             @Override
             protected Integer doInBackground(String... params) {
                 try {
                     ZzExcelCreator
-                            .getInstance()
-                            .openExcel(new File(PATH + params[0] + ".xls"))  //如果不想覆盖文件，注意是openExcel
-                            .createSheet(params[1])
-                            .close();
+                        .getInstance()
+                        .openExcel(new File(PATH + params[0] + ".xls"))  //如果不想覆盖文件，注意是openExcel
+                        .createSheet(params[1])
+                        .close();
                     return 1;
                 } catch (IOException | WriteException e) {
                     e.printStackTrace();
@@ -370,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
                     return 0;
                 }
             }
-
+            
             @Override
             protected void onPostExecute(Integer aVoid) {
                 super.onPostExecute(aVoid);
@@ -382,8 +385,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }.execute(fileName, sheetName);
     }
-
-
+    
+    
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

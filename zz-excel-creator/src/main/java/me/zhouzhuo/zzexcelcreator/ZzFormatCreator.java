@@ -21,6 +21,7 @@ import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
 import jxl.format.Colour;
+import jxl.format.UnderlineStyle;
 import jxl.format.VerticalAlignment;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
@@ -70,6 +71,34 @@ public class ZzFormatCreator implements FormatManager {
     public ZzFormatCreator setFontColor(Colour color) throws WriteException {
         checkNull();
         font.setColour(color);
+        return this;
+    }
+    
+    @Override
+    public ZzFormatCreator setFontBold(boolean bold) throws WriteException {
+        checkNull();
+        font.setBoldStyle(bold ? WritableFont.BOLD : WritableFont.NO_BOLD);
+        return this;
+    }
+    
+    @Override
+    public ZzFormatCreator setUnderline(boolean underline) throws WriteException {
+        checkNull();
+        font.setUnderlineStyle(underline ? UnderlineStyle.SINGLE : UnderlineStyle.NO_UNDERLINE);
+        return this;
+    }
+    
+    @Override
+    public ZzFormatCreator setDoubleUnderline(boolean doubleUnderline) throws WriteException {
+        checkNull();
+        font.setUnderlineStyle(doubleUnderline ? UnderlineStyle.DOUBLE : UnderlineStyle.NO_UNDERLINE);
+        return this;
+    }
+    
+    @Override
+    public ZzFormatCreator setItalic(boolean italic) throws WriteException {
+        checkNull();
+        font.setItalic(italic);
         return this;
     }
     

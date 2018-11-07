@@ -50,6 +50,42 @@ public interface FormatManager {
     ZzFormatCreator setFontColor(Colour color) throws WriteException;
     
     /**
+     * 设置粗体
+     *
+     * @param bold 是否加粗
+     * @return ZzFormatCreator
+     * @throws WriteException ex
+     */
+    ZzFormatCreator setFontBold(boolean bold) throws WriteException;
+    
+    /**
+     * 设置下划线
+     *
+     * @param underline 是否下划线
+     * @return ZzFormatCreator
+     * @throws WriteException ex
+     */
+    ZzFormatCreator setUnderline(boolean underline) throws WriteException;
+    
+    /**
+     * 设置双重下划线
+     *
+     * @param doubleUnderline 是否双重下划线
+     * @return ZzFormatCreator
+     * @throws WriteException ex
+     */
+    ZzFormatCreator setDoubleUnderline(boolean doubleUnderline) throws WriteException;
+    
+    /**
+     * 设置是否斜体
+     *
+     * @param italic 是否斜体
+     * @return ZzFormatCreator
+     * @throws WriteException ex
+     */
+    ZzFormatCreator setItalic(boolean italic) throws WriteException;
+    
+    /**
      * 设置内容靠边或居中
      *
      * @param align         水平对其方式
