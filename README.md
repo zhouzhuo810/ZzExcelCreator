@@ -1,4 +1,7 @@
 # ZzExcelCreator
+
+[![](https://jitpack.io/v/zhouzhuo810/ZzExcelCreator.svg)](https://jitpack.io/#zhouzhuo810/ZzExcelCreator)
+
 Excel表格生成工具
 
 项目地址:https://github.com/zhouzhuo810/ZzExcelCreator
