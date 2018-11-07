@@ -16,8 +16,6 @@
 
 package me.zhouzhuo.zzexcelcreator;
 
-import android.util.Log;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
