@@ -188,6 +188,7 @@ public class ZzExcelCreator implements ExcelManager {
             int max = maxColWidthArray.get(col);
             if (realContentWidth > max) {
                 if (realContentWidth > limitMaxWidth) {
+                    maxColWidthArray.put(col, limitMaxWidth);
                     return limitMaxWidth;
                 } else {
                     maxColWidthArray.put(col, realContentWidth);
