@@ -16,6 +16,8 @@
 
 package me.zhouzhuo.zzexcelcreator;
 
+import android.util.SparseIntArray;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,8 +43,12 @@ public class ZzExcelCreator implements ExcelManager {
     private static ZzExcelCreator creator;
     private WritableWorkbook writableWorkbook;
     private WritableSheet writableSheet;
+    private SparseIntArray maxColWidthArray;
+    private SparseIntArray maxRowHeightArray;
     
     private ZzExcelCreator() {
+        maxColWidthArray = new SparseIntArray();
+        maxRowHeightArray = new SparseIntArray();
     }
     
     public static ZzExcelCreator getInstance() {
@@ -85,6 +91,9 @@ public class ZzExcelCreator implements ExcelManager {
     public ZzExcelCreator openSheet(int position) {
         checkNullFirst();
         writableSheet = writableWorkbook.getSheet(position);
+        checkNullArray();
+        maxColWidthArray.clear();
+        maxRowHeightArray.clear();
         return this;
     }
     
@@ -141,22 +150,115 @@ public class ZzExcelCreator implements ExcelManager {
     
     @Override
     public ZzExcelCreator fillContent(int col, int row, String content, WritableCellFormat format) throws WriteException {
-        return fillContent(col, row, content, false, format);
-    }
-    
-    @Override
-    public ZzExcelCreator fillContent(int col, int row, String content, boolean autoWidth, WritableCellFormat format) throws WriteException {
         checkNullFirst();
         checkNullSecond();
-        if (autoWidth && content != null) {
-            int chineseLength = getChineseNum(content);
-            writableSheet.setColumnView(col, (int) ((content.length() - chineseLength) * 1.15 + 2 + chineseLength * 3 + 0.5));
+        if (content == null) {
+            content = "";
         }
+        
+        if (format != null && format.getWrap()) {
+            setRowHeight(row, getRealRowHeight(row, content));
+            setColumnWidth(col, getRealColWidth(col, content));
+        }
+        
         if (format == null)
             writableSheet.addCell(new Label(col, row, content));
         else
             writableSheet.addCell(new Label(col, row, content, format));
+        
         return this;
+    }
+    
+    private int getRealColWidth(int col, String content) {
+        int realContentWidth = getRealContentWidth(content);
+        int limitMaxWidth = ZzFormatCreator.getInstance().getMaxWidth();
+        if (maxColWidthArray.indexOfKey(col) >= 0) {
+            int max = maxColWidthArray.get(col);
+            if (realContentWidth > max) {
+                if (realContentWidth > limitMaxWidth) {
+                    return limitMaxWidth;
+                } else {
+                    maxColWidthArray.put(col, realContentWidth);
+                    return realContentWidth;
+                }
+            } else {
+                return max;
+            }
+        } else {
+            if (realContentWidth > limitMaxWidth) {
+                maxColWidthArray.put(col, limitMaxWidth);
+                return limitMaxWidth;
+            } else {
+                maxColWidthArray.put(col, realContentWidth);
+                return realContentWidth;
+            }
+        }
+    }
+    
+    private int getRealContentWidth(String content) {
+        if (content != null) {
+            if (content.contains("\n")) {
+                String[] split = content.split("\n");
+                int maxWidth = 0;
+                for (String s : split) {
+                    int chineseLength = getChineseNum(s);
+                    int curWidth = (int) ((s.length() - chineseLength) * 1.15 + 2 + chineseLength * 3 + 0.5);
+                    if (maxWidth < curWidth) {
+                        maxWidth = curWidth;
+                    }
+                }
+                return maxWidth;
+            } else {
+                int chineseLength = getChineseNum(content);
+                return (int) ((content.length() - chineseLength) * 1.15 + 2 + chineseLength * 3 + 0.5);
+            }
+        }
+        return 0;
+    }
+    
+    
+    private int getRealRowHeight(int row, String content) {
+        int realContentHeight = getRealContentHeight(content);
+        if (maxRowHeightArray.indexOfKey(row) >= 0) {
+            int max = maxRowHeightArray.get(row);
+            if (realContentHeight > max) {
+                maxRowHeightArray.put(row, realContentHeight);
+                return realContentHeight;
+            } else {
+                return max;
+            }
+        } else {
+            maxRowHeightArray.put(row, realContentHeight);
+            return realContentHeight;
+        }
+    }
+    
+    private int getRealContentHeight(String content) {
+        if (content != null) {
+            int lineCount = 0;
+            if (content.contains("\n")) {
+                String[] split = content.split("\n");
+                lineCount += split.length;
+                for (String s : split) {
+                    int chineseLength = getChineseNum(s);
+                    int curWidth = (int) ((s.length() - chineseLength) * 1.15 + 2 + chineseLength * 3 + 0.5);
+                    if (curWidth > ZzFormatCreator.getInstance().getMaxWidth()) {
+                        lineCount += (curWidth / ZzFormatCreator.getInstance().getMaxWidth());
+                    }
+                }
+            } else {
+                int chineseLength = getChineseNum(content);
+                int curWidth = (int) ((content.length() - chineseLength) * 1.15 + 2 + chineseLength * 3 + 0.5);
+                if (curWidth > ZzFormatCreator.getInstance().getMaxWidth()) {
+                    lineCount += (curWidth / ZzFormatCreator.getInstance().getMaxWidth() + 1);
+                } else {
+                    lineCount++;
+                }
+            }
+            return lineCount * 420;
+            
+        }
+        return 420;
     }
     
     /**
@@ -255,5 +357,13 @@ public class ZzExcelCreator implements ExcelManager {
         }
     }
     
+    private void checkNullArray() {
+        if (maxRowHeightArray == null) {
+            maxRowHeightArray = new SparseIntArray();
+        }
+        if (maxColWidthArray == null) {
+            maxColWidthArray = new SparseIntArray();
+        }
+    }
     
 }

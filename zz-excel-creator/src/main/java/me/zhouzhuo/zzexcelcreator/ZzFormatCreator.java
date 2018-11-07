@@ -17,6 +17,8 @@
 
 package me.zhouzhuo.zzexcelcreator;
 
+import java.security.InvalidParameterException;
+
 import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
@@ -36,6 +38,8 @@ public class ZzFormatCreator implements FormatManager {
     private WritableFont font;
     private WritableCellFormat cellFormat;
     private static ZzFormatCreator creator;
+    
+    private int maxWidth = 100;
     
     private ZzFormatCreator() {
     }
@@ -64,6 +68,7 @@ public class ZzFormatCreator implements FormatManager {
         cellFormat.setFont(font);
         cellFormat.setAlignment(Alignment.CENTRE);
         cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
+        cellFormat.setWrap(true);
         return this;
     }
     
@@ -99,6 +104,17 @@ public class ZzFormatCreator implements FormatManager {
     public ZzFormatCreator setItalic(boolean italic) throws WriteException {
         checkNull();
         font.setItalic(italic);
+        return this;
+    }
+    
+    @Override
+    public ZzFormatCreator setWrapContent(boolean wrap, int maxWidth) throws WriteException {
+        checkNull();
+        if (maxWidth <= 0) {
+            throw new InvalidParameterException("maxWidth must > 0");
+        }
+        cellFormat.setWrap(wrap);
+        this.maxWidth = maxWidth;
         return this;
     }
     
@@ -146,4 +162,8 @@ public class ZzFormatCreator implements FormatManager {
         }
     }
     
+    @Override
+    public int getMaxWidth() {
+        return maxWidth;
+    }
 }

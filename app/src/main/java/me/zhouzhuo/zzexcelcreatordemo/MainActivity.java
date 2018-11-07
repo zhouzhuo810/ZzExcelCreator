@@ -238,14 +238,15 @@ public class MainActivity extends AppCompatActivity {
                                 .setFontBold(true)
                                 .setUnderline(true)
                                 .setItalic(true)
+                                .setWrapContent(true, 100)
                                 .setFontColor(Colour.DARK_GREEN)
                                 .getCellFormat();
                             ZzExcelCreator
                                 .getInstance()
                                 .openExcel(new File(PATH + fileName + ".xls"))
                                 .openSheet(0)   //打开第1个sheet
-                                .setRowHeight(Integer.parseInt(row), 400)
-                                .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, true, format)
+                                //.setRowHeight(Integer.parseInt(row), 400)
+                                .fillContent(Integer.parseInt(col), Integer.parseInt(row), str, format)
                                 .close();
                             return 1;
                         } catch (IOException | WriteException | BiffException e) {

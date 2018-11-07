@@ -86,6 +86,16 @@ public interface FormatManager {
     ZzFormatCreator setItalic(boolean italic) throws WriteException;
     
     /**
+     * 设置是否自适应宽高
+     *
+     * @param wrap     是否自适应
+     * @param maxWidth 最大宽度，到达该宽度则换行。
+     * @return ZzFormatCreator
+     * @throws WriteException ex
+     */
+    ZzFormatCreator setWrapContent(boolean wrap, int maxWidth) throws WriteException;
+    
+    /**
      * 设置内容靠边或居中
      *
      * @param align         水平对其方式
@@ -131,4 +141,11 @@ public interface FormatManager {
      * @return WritableCellFormat
      */
     WritableCellFormat getCellFormat();
+    
+    /**
+     * 获取最大宽度
+     *
+     * @return 最大宽度
+     */
+    int getMaxWidth();
 }

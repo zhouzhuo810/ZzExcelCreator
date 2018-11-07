@@ -132,17 +132,6 @@ public interface ExcelManager {
      */
     ZzExcelCreator fillNumber(int col, int row, double number, WritableCellFormat format) throws WriteException;
 
-    /**
-     * 填充表格内容(字符串)
-     *
-     * @param col     列号
-     * @param row     行号
-     * @param content 要填充的内容
-     * @param format  格式(默认时传null即可)
-     * @return ZzExcelCreator
-     * @throws WriteException ex
-     */
-    ZzExcelCreator fillContent(int col, int row, String content, WritableCellFormat format) throws WriteException;
 
     /**
      * 填充表格内容(字符串)
@@ -150,12 +139,11 @@ public interface ExcelManager {
      * @param col       列号
      * @param row       行号
      * @param content   要填充的内容
-     * @param autoWidth 是否自适应宽度
      * @param format    格式(默认时传null即可)
      * @return ZzExcelCreator
      * @throws WriteException ex
      */
-    ZzExcelCreator fillContent(int col, int row, String content, boolean autoWidth, WritableCellFormat format) throws WriteException;
+    ZzExcelCreator fillContent(int col, int row, String content, WritableCellFormat format) throws WriteException;
 
     /**
      * 设置行高
