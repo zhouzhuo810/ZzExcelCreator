@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZzExcelCreator.iml" filepath="$PROJECT_DIR$/ZzExcelCreator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/ZzExcelCreator-app.iml" filepath="$PROJECT_DIR$/app/ZzExcelCreator-app.iml" group="ZzExcelCreator/app" />
+      <module fileurl="file://$PROJECT_DIR$/zz-excel-creator/ZzExcelCreator-zz-excel-creator.iml" filepath="$PROJECT_DIR$/zz-excel-creator/ZzExcelCreator-zz-excel-creator.iml" group="ZzExcelCreator/zz-excel-creator" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/github-ZzExcelCreator.iml" filepath="$PROJECT_DIR$/github-ZzExcelCreator.iml" group="ZzExcelCreator" />
       <module fileurl="file://$PROJECT_DIR$/zz-excel-creator/zz-excel-creator.iml" filepath="$PROJECT_DIR$/zz-excel-creator/zz-excel-creator.iml" />
     </modules>
   </component>

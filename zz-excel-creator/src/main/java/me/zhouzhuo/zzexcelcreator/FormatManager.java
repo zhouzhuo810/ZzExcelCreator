@@ -115,7 +115,7 @@ public interface FormatManager {
     ZzFormatCreator setBackgroundColor(Colour color) throws WriteException;
     
     /**
-     * 设置单元格边框样式
+     * 设置单元格边框样式，可调用多次，如果一个单元格需要上和下边框，调用两次即可
      *
      * @param border          边框位置
      * @param borderLineStyle 边框线样式

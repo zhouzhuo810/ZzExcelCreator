@@ -36,7 +36,7 @@ Excel表格生成工具
 
 ```
 	dependencies {
-	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.6'
+	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.7'
 	}
 ```
 
@@ -88,7 +88,8 @@ Excel表格生成工具
                 .setItalic(true)                    //设置是否斜体
                 .setWrapContent(true, 100)          //设置是否自适应宽高，如果自适应，必须设置最大列宽（不能太大，否则可能无效）。
                 .setBackgroundColor(ColourUtil.getCustomColor1("#99cc00"))  //设置单元格背景颜色，如果不设置边框，边框色会和背景色一致。
-                .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColor2("#dddddd"))  //设置边框样式
+                .setBorder(Border.LEFT, BorderLineStyle.THIN, ColourUtil.getCustomColor2("#dddddd"))  //设置左边边框样式
+                .setBorder(Border.TOP, BorderLineStyle.THIN, ColourUtil.getCustomColor2("#dddddd"))  //设置顶部边框样式
                 .getCellFormat();
 ```
 
@@ -100,11 +101,24 @@ Excel表格生成工具
                 .openExcel(new File(PATH + fileName + ".xls"))
                 .openSheet(0)
                 .setColumnWidth(colInt, 25)   //设置列宽(如果自适应宽度，代表内容字节的长度,即str.getBytes().length)
-                .setRowHeight(rowInt, 400)    //设置行高
+                .setRowHeight(rowInt, 400)    //设置行高，单位为磅的20倍
                 .fillContent(colInt, rowInt, str, format)  //填入字符串
                 .fillNumber(colInt, rowInt, Double.parseDouble(str), format)  //填入数字
                 .close();
 ```
+
+```java
+        ZzExcelCreator
+                .getInstance()
+                .openExcel(new File(PATH + fileName + ".xls"))
+                .openSheet(0)
+                .setColumnWidth(colInt, 25)      //设置列宽(如果自适应宽度，代表内容字节的长度,即str.getBytes().length)
+                .setRowHeightLikeWPS(rowInt, 26) //设置行高同WPS，单位磅
+                .fillContent(colInt, rowInt, str, format)  //填入字符串
+                .fillNumber(colInt, rowInt, Double.parseDouble(str), format)  //填入数字
+                .close();
+```
+
 
 ### 读取单元格内容
 

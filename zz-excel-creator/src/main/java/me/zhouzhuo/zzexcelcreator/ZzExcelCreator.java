@@ -329,7 +329,25 @@ public class ZzExcelCreator implements ExcelManager {
         }
         return this;
     }
-
+    
+    @Override
+    public ZzExcelCreator setRowHeightLikeWPS(int position, int height) throws RowsExceededException {
+        checkNullFirst();
+        checkNullSecond();
+        writableSheet.setRowView(position, height * 20);
+        return this;
+    }
+    
+    @Override
+    public ZzExcelCreator setRowHeightLikeWPSFromTo(int from, int to, int height) throws RowsExceededException {
+        checkNullFirst();
+        checkNullSecond();
+        for (int i = from; i < to; i++) {
+            writableSheet.setRowView(i, height * 20);
+        }
+        return this;
+    }
+    
     @Override
     public ZzExcelCreator setColumnWidth(int position, int width) {
         checkNullFirst();

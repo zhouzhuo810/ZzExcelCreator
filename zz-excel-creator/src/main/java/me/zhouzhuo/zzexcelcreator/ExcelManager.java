@@ -169,7 +169,34 @@ public interface ExcelManager {
      * @throws RowsExceededException ex
      */
     ZzExcelCreator setRowHeightFromTo(int from, int to, int height) throws RowsExceededException;
-
+    
+    
+    /**
+     * 设置行高，单位是 磅
+     * <p>
+     * <p>(推荐行高为26)</p>
+     *
+     * @param position 行号
+     * @param height   行高
+     * @return ZzExcelCreator
+     * @throws RowsExceededException ex
+     */
+    ZzExcelCreator setRowHeightLikeWPS(int position, int height) throws RowsExceededException;
+    
+    /**
+     * 设置行高，单位是 磅
+     * <p>
+     * <p>(推荐行高为26)</p>
+     *
+     * @param from   起始行号
+     * @param to     目标行号+1
+     * @param height 行高
+     * @return ZzExcelCreator
+     * @throws RowsExceededException ex
+     */
+    ZzExcelCreator setRowHeightLikeWPSFromTo(int from, int to, int height) throws RowsExceededException;
+    
+    
     /**
      * 设置列宽
      * <p>
