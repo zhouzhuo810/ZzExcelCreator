@@ -36,7 +36,7 @@ Excel表格生成工具
 
 ```
 	dependencies {
-	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.7'
+	        implementation 'com.github.zhouzhuo810:ZzExcelCreator:1.0.8'
 	}
 ```
 
@@ -95,6 +95,8 @@ Excel表格生成工具
 
 ### 设置行高、列宽和写入字符串或数字
 
+#### 写入数字
+
 ```java
         ZzExcelCreator
                 .getInstance()
@@ -107,6 +109,8 @@ Excel表格生成工具
                 .close();
 ```
 
+#### 写入字符串
+
 ```java
         ZzExcelCreator
                 .getInstance()
@@ -117,6 +121,20 @@ Excel表格生成工具
                 .fillContent(colInt, rowInt, str, format)  //填入字符串
                 .fillNumber(colInt, rowInt, Double.parseDouble(str), format)  //填入数字
                 .close();
+```
+
+#### 写入图片
+
+```java
+        ZzExcelCreator
+                .getInstance()
+                .openExcel(new File(PATH + fileName + ".xls"))
+                .openSheet(0)
+                .fillImage(Integer.parseInt(col), Integer.parseInt(row),
+                        Double.parseDouble(width), Double.parseDouble(height),
+                        new File(filePath))
+                .close();
+         //注意插入图片的宽高的单位为行高或列宽的倍数。
 ```
 
 

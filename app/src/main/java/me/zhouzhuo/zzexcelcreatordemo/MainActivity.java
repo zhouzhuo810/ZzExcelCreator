@@ -2,20 +2,27 @@ package me.zhouzhuo.zzexcelcreatordemo;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import jxl.format.Alignment;
 import jxl.format.Border;
@@ -47,9 +54,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText etString;
     private Button btnAddString;
     private EditText etRow1;
+    private EditText etCol4;
+    private TextView tvImgPath;
+    private Button btnAddNumber;
+    private EditText etRow4;
     private EditText etCol1;
     private EditText etNumber;
-    private Button btnAddNumber;
+    private Button btnAddImg;
     private EditText etStartRow;
     private EditText etStartCol;
     private EditText etEndRow;
@@ -58,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText etRowRead;
     private EditText etColRead;
     private Button btnGetCellContent;
+    private ScrollView activityMain;
+    private EditText mEtWidth4;
+    private EditText mEtHeight4;
     
     
     @Override
@@ -80,9 +94,15 @@ public class MainActivity extends AppCompatActivity {
         etString = findViewById(R.id.et_string);
         btnAddString = findViewById(R.id.btn_add_string);
         etRow1 = findViewById(R.id.et_row1);
+        etCol4 = findViewById(R.id.et_col4);
+        tvImgPath = findViewById(R.id.tv_img_path);
+        btnAddNumber = findViewById(R.id.btn_add_number);
+        etRow4 = findViewById(R.id.et_row4);
+        mEtWidth4 = findViewById(R.id.et_width4);
+        mEtHeight4 = findViewById(R.id.et_height4);
         etCol1 = findViewById(R.id.et_col1);
         etNumber = findViewById(R.id.et_number);
-        btnAddNumber = findViewById(R.id.btn_add_number);
+        btnAddImg = findViewById(R.id.btn_add_img);
         etStartRow = findViewById(R.id.et_start_row);
         etStartCol = findViewById(R.id.et_start_col);
         etEndRow = findViewById(R.id.et_end_row);
@@ -91,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         etRowRead = findViewById(R.id.et_row_read);
         etColRead = findViewById(R.id.et_col_read);
         btnGetCellContent = findViewById(R.id.btn_get_cell_content);
+        activityMain = findViewById(R.id.activity_main);
         
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +182,60 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }.execute(co1l, row1, co12, row2);
+            }
+        });
+        
+        tvImgPath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImageFile();
+            }
+        });
+        
+        btnAddImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String filePath = tvImgPath.getText().toString();
+                if (TextUtils.isEmpty(filePath)) {
+                    Toast.makeText(MainActivity.this, "请选择图片！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                final String fileName = etFileName.getText().toString().trim();
+                
+                final String width = mEtWidth4.getText().toString().trim();
+                final String height = mEtHeight4.getText().toString().trim();
+                final String col = etCol4.getText().toString().trim();
+                final String row = etRow4.getText().toString().trim();
+                
+                new AsyncTask<String, Void, Integer>() {
+                    
+                    @Override
+                    protected Integer doInBackground(String... params) {
+                        try {
+                            ZzExcelCreator zzExcelCreator = ZzExcelCreator
+                                .getInstance()
+                                .openExcel(new File(PATH + fileName + ".xls"))
+                                .openSheet(0);//打开第1个sheet
+                            zzExcelCreator.fillImage(Integer.parseInt(col), Integer.parseInt(row), Double.parseDouble(width), Double.parseDouble(height),
+                                new File(filePath))
+                                .close();
+                            return 1;
+                        } catch (IOException | WriteException | BiffException | NumberFormatException e) {
+                            e.printStackTrace();
+                            return 0;
+                        }
+                    }
+                    
+                    @Override
+                    protected void onPostExecute(Integer aVoid) {
+                        super.onPostExecute(aVoid);
+                        if (aVoid == 1) {
+                            Toast.makeText(MainActivity.this, "插入成功！", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "插入失败！", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }.execute(col, row);
             }
         });
         
@@ -388,6 +463,31 @@ public class MainActivity extends AppCompatActivity {
         }.execute(fileName, sheetName);
     }
     
+    private void chooseImageFile() {
+        Intent intentToPickPic = new Intent(Intent.ACTION_PICK, null);
+        intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intentToPickPic, 0x02);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 0x02) {
+                if (data == null) {
+                    return;
+                }
+                Uri uri = data.getData();
+                if (uri == null) {
+                    return;
+                }
+                String filePath = FileUtil.getFilePathByUri(this, uri);
+                if (!TextUtils.isEmpty(filePath)) {
+                    tvImgPath.setText(filePath);
+                }
+            }
+        }
+    }
     
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

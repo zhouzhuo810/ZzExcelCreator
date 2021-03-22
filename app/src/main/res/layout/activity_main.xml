@@ -261,6 +261,132 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
+                android:text="行号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_row4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入行号"
+                android:inputType="number"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="列号"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_col4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入列号"
+                android:inputType="number"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="图片宽度"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_width4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入宽度(列宽的倍数，支持小数)"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="图片高度"
+                android:textSize="14sp" />
+
+
+            <EditText
+                android:id="@+id/et_height4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="输入高度(行高的倍数，支持小数)"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="图片路径"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tv_img_path"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:hint="点击选择图片"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add_img"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="插入图片" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:text="起始行号"
                 android:textSize="14sp" />
 

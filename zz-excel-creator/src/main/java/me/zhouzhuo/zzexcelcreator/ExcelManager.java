@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import jxl.read.biff.BiffException;
 import jxl.write.WritableCellFormat;
+import jxl.write.WritableImage;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
@@ -144,6 +145,32 @@ public interface ExcelManager {
      * @throws WriteException ex
      */
     ZzExcelCreator fillContent(int col, int row, String content, WritableCellFormat format) throws WriteException;
+    
+    /**
+     * 填充图片
+     *
+     * @param col 列
+     * @param row 行
+     * @param width 图片宽度(列宽的倍数)
+     * @param height 图片高度(行高的倍数，1:1的图片推荐宽度的4倍，9:6的图片推荐宽度的7倍左右)
+     * @param imgFile 图片文件
+     * @return ZzExcelCreator
+     * @throws WriteException ex
+     */
+    ZzExcelCreator fillImage(int col, int row, double width, double height, File imgFile) throws WriteException;
+
+    /**
+     * 填充图片
+     *
+     * @param col 列
+     * @param row 行
+     * @param width 图片宽度(列宽的倍数)
+     * @param height 图片高度(行高的倍数，1:1的图片推荐宽度的4倍，9:6的图片推荐宽度的7倍左右)
+     * @param imgBytes 图片字节数组
+     * @return ZzExcelCreator
+     * @throws WriteException ex
+     */
+    ZzExcelCreator fillImage(int col, int row, double width, double height, byte[] imgBytes) throws WriteException;
 
     /**
      * 设置行高

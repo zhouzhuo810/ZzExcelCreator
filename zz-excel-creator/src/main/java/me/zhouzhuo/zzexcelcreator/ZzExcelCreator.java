@@ -29,6 +29,7 @@ import jxl.read.biff.BiffException;
 import jxl.write.Label;
 import jxl.write.Number;
 import jxl.write.WritableCellFormat;
+import jxl.write.WritableImage;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -66,8 +67,9 @@ public class ZzExcelCreator implements ExcelManager {
     @Override
     public ZzExcelCreator createExcel(String pathDir, String name) throws IOException {
         File dir = new File(pathDir);
-        if (!dir.exists())
+        if (!dir.exists()) {
             dir.mkdirs();
+        }
         writableWorkbook = Workbook.createWorkbook(new File(pathDir + File.separator + name + ".xls"));
         return this;
     }
@@ -145,10 +147,11 @@ public class ZzExcelCreator implements ExcelManager {
             setRowHeight(row, getRealRowHeight(row, number + "", format));
             setColumnWidth(col, getRealColWidth(col, number + "", format));
         }
-        if (format == null)
+        if (format == null) {
             writableSheet.addCell(new Number(col, row, number));
-        else
+        } else {
             writableSheet.addCell(new Number(col, row, number, format));
+        }
         return this;
     }
 
@@ -165,14 +168,31 @@ public class ZzExcelCreator implements ExcelManager {
             setColumnWidth(col, getRealColWidth(col, content, format));
         }
 
-        if (format == null)
+        if (format == null) {
             writableSheet.addCell(new Label(col, row, content));
-        else
+        } else {
             writableSheet.addCell(new Label(col, row, content, format));
+        }
 
         return this;
     }
-
+    
+    @Override
+    public ZzExcelCreator fillImage(int col, int row, double width, double height, File imgFile) throws WriteException {
+        checkNullFirst();
+        checkNullSecond();
+        writableSheet.addImage(new WritableImage(col, row, width, height, imgFile));
+        return this;
+    }
+    
+    @Override
+    public ZzExcelCreator fillImage(int col, int row, double width, double height, byte[] imgBytes) throws WriteException {
+        checkNullFirst();
+        checkNullSecond();
+        writableSheet.addImage(new WritableImage(col, row, width, height, imgBytes));
+        return this;
+    }
+    
     /**
      * 根据同一列的其他单元格宽度，综合获取列宽
      *
