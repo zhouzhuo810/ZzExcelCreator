@@ -411,9 +411,10 @@ public class ZzExcelCreator implements ExcelManager {
 
     @Override
     public void close() throws IOException, WriteException {
-        checkNullFirst();
-        writableWorkbook.write();
-        writableWorkbook.close();
+        if (writableWorkbook != null) {
+            writableWorkbook.write();
+            writableWorkbook.close();
+        }
         writableWorkbook = null;
         writableSheet = null;
     }
